@@ -1,0 +1,1 @@
+mongodb+srv://raboscan-leon:136346194@cluster0.axpfu.mongodb.net/sample_restaurants?retryWrites=true&w=majority
