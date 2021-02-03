@@ -4,20 +4,19 @@
 * No part of this assignment has been copied manually or electronically from any other source 
 * (including web sites) or distributed to other students. 
 * 
-* Name: _Rony Alberto Boscan Leon__ Student ID: _136-346-194__ Date: _22-01-2021_____ 
-* Heroku Link: _______________________________________________________________ 
+* Name: _Rony Alberto Boscan Leon____ Student ID: _136-346-194____ Date: _22-01-2021_____ 
+* Heroku Link: _https://peaceful-tundra-65893.herokuapp.com/
 * 
 **************************************************************************************************/
 
 // ******************** 1. Load Server Resources ********************
-// Load Express Server
-const express = require("express");
+const express = require("express"); // Load Express Server
 const app = express();
-// Load Cors Package
-const cors = require("cors");
-// Load Restaurant DB Connection Module
-const RestaurantDB = require("./modules/restaurantDB.js");
+const cors = require("cors"); // Load Cors Package
+const RestaurantDB = require("./modules/restaurantDB.js"); // Load Restaurant DB Connection Module
 const db = new RestaurantDB("mongodb+srv://raboscan-leon:136346194@cluster0.axpfu.mongodb.net/sample_restaurants?retryWrites=true&w=majority");
+const path = require("path"); // Path
+
 
 // ******************** 2. Configure Server Resources ********************
 // Configuring body parser (Express built-in)
@@ -26,15 +25,17 @@ app.use(express.json());
 app.use(cors());
 // Port configuration for Express / Heroku
 const HTTP_PORT = process.env.PORT || 8080; // Port for express server
-// call this function after the http server starts listening for requests
-// function onHttpStart() {
-//   console.log("Express http server listening on: " + HTTP_PORT);
-// }
+
 
 // ******************** 3. Configure Server Routes / Handlers ********************
+
+// setup virtual directory for public (static) elements
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
 // setup route for the home page
 app.get("/", function(req, res){
-  res.json({message: "API Listening"});
+  //res.json({message: "API Listening"});
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // setup route to retrieve all restaurants
@@ -67,7 +68,12 @@ app.get("/api/restaurants/:id", function(req, res){
 app.post("/api/restaurants", function(req, res){
   data = req.body;
   // call db function to add restaurant
-  res.status(201).json({ message: `added a new restaurant: ${data}` });
+  db.addNewRestaurant(data).then(msg => {
+    res.status(201).json({ message: msg });
+  })
+  .catch(err => {
+    res.json({ message: `Unexpected error: ${err}` });
+  });
 });
 
 // setup route to update/edit a restaurant

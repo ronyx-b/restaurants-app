@@ -1,0 +1,7 @@
+#restaurant-table tbody tr:hover { 
+  cursor:pointer;
+}
+
+#leaflet { 
+  height: 400px;
+}
