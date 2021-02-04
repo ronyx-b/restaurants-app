@@ -1,10 +1,10 @@
 /**************************************************************************************************
-* WEB422 – Assignment 1 
+* WEB422 – Assignment 2 
 * I declare that this assignment is my own work in accordance with Seneca Academic Policy. 
 * No part of this assignment has been copied manually or electronically from any other source 
 * (including web sites) or distributed to other students. 
 * 
-* Name: _Rony Alberto Boscan Leon____ Student ID: _136-346-194____ Date: _22-01-2021_____ 
+* Name: _Rony Alberto Boscan Leon____ Student ID: _136-346-194____ Date: _05-02-2021_____ 
 * Heroku Link: _https://peaceful-tundra-65893.herokuapp.com/
 * 
 **************************************************************************************************/
@@ -34,8 +34,11 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // setup route for the home page
 app.get("/", function(req, res){
-  //res.json({message: "API Listening"});
   res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get("/api", function(req, res){
+  res.json({message: "API Listening"});
 });
 
 // setup route to retrieve all restaurants
