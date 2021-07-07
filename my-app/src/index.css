@@ -1,0 +1,7 @@
+.table-hover tbody tr:hover { 
+  cursor:pointer;
+}
+
+.container, table, .leaflet-container, .card-deck {
+  margin-top: 20px;
+}

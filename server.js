@@ -29,13 +29,20 @@ const HTTP_PORT = process.env.PORT || 8080; // Port for express server
 
 // ******************** 3. Configure Server Routes / Handlers ********************
 
-// setup virtual directory for public (static) elements
-app.use('/public', express.static(path.join(__dirname, 'public')));
+// // setup virtual directory for public (static) elements
+// app.use('/public', express.static(path.join(__dirname, 'public')));
 
-// setup route for the home page
-app.get("/", function(req, res){
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
+// // setup route for the home page
+// app.get("/", function(req, res){
+//   res.sendFile(path.join(__dirname, '/public/index.html')); // res.sendFile(path.join(__dirname, '/index.html'));
+// });
+
+app.use('/', express.static("build"));
+
+// Redirect Users to "index.html" if route not accessed using client side routing
+// app.use((req, res) => {
+//     res.sendFile(path.join(__dirname + "/public/index.html"));
+// });
 
 app.get("/api", function(req, res){
   res.json({message: "API Listening"});
